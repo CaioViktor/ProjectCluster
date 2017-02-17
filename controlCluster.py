@@ -4,16 +4,6 @@ import scipy
 import modelCliente as cli
 
 
-def main():
-	idToCliente = cli.readClientes("input/tabula-ACD.csv")
-	matriz = toMatrix(idToCliente)
-	classes = clusterizar(matriz,idToCliente)
-	print("clusters: "+str(len(classes)))
-	for classeId in classes:
-		print("\n\n\nClasse: " + str(classeId))
-		for cliente in classes[classeId]:
-			print("q: "+ str(cliente.quantPedidos)+" s: "+str(cliente.somaPedidos))
-
 def toMatrix(idToCliente):
 	matriz = list()
 	for clienteId in idToCliente:
@@ -51,6 +41,8 @@ def clusterizar(matriz,idToCliente,limiteClusters=10,limiar=0.01):
 
 
 	# print("clusters: "+str(clusters)+" ----- "+str(delta[clusters]))
+	if clusters >= limiteClusters:
+		clusters = limiteClusters - 1
 	classificados = kmeans[clusters].labels_
 	cont = 0
 	for clienteId in idToCliente:
@@ -66,5 +58,8 @@ def clusterizar(matriz,idToCliente,limiteClusters=10,limiar=0.01):
 	return classes
 	
 
-if __name__ == "__main__":
-	main()
+def classificar(clustersMax,limiar):
+	idToCliente = cli.readClientes("static/input/input.csv")
+	matriz = toMatrix(idToCliente)
+	classes = clusterizar(matriz,idToCliente,limiteClusters = clustersMax,limiar=limiar)
+	return {'clientes' : idToCliente,'classes' : classes}

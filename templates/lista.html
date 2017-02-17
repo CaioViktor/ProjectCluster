@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang = "pt-br">
+	<head>
+		<meta charset = "UTF-8">
+		<link rel = "stylesheet" href = "{{url_for('static',filename='css/style.css')}}">
+		<title>lista</title>
+	</head>
+	<body>
+		<div class = "content" id = "listaDiv">
+			<p>Quantidade de classes localizados: {%print(classes|length)%}</p>
+			<p>Quantidade de clientes: {%print(clientes|length)%}</p>
+			<a href = "{{url_for('new')}}">Selecionar novo arquivo</a>
+			<center>
+				<table id = "lista">
+					<tr>
+						<th>Codigo</th>
+						<th>Nome</th>
+						<th>Região</th>
+						<th>Quantidade de pedidos</th>
+						<th>Soma pedidos</th>
+						<th>classe</th>
+					</tr>
+					{%for cliente in clientes%}
+						{%set id = "cor"+ (loop.index%2)|string%}
+						<tr id = {{id}}>
+						<td>{{clientes[cliente].codigo}}</td>
+						<td>{{clientes[cliente].nome}}</td>
+						<td>{{clientes[cliente].regiao}}</td>
+						<td>{{clientes[cliente].quantPedidos}}</td>
+						<td>{{clientes[cliente].somaPedidos}}</td>
+						<td>{{clientes[cliente].classe}}</td>
+						<tr>
+					{%endfor%}	
+				</table>
+			</center>
+		</div>
+	</body>
+</html>
