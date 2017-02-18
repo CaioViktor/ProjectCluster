@@ -44,6 +44,7 @@ def clusterizar(matriz,idToCliente,limiteClusters=10,limiar=0.01):
 	if clusters >= limiteClusters:
 		clusters = limiteClusters - 1
 	classificados = kmeans[clusters].labels_
+	centroid = centroids[clusters]
 	cont = 0
 	for clienteId in idToCliente:
 		cliente = idToCliente[clienteId]
@@ -53,7 +54,6 @@ def clusterizar(matriz,idToCliente,limiteClusters=10,limiar=0.01):
 			classe = list()
 			classes[classificados[cont]] = classe
 		classe.append(cliente)
-		# print(cliente)
 		cont+= 1
 	return classes
 	

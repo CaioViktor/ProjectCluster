@@ -9,7 +9,7 @@
 		<div class = "content" id = "listaDiv">
 			<p>Quantidade de classes localizados: {%print(classes|length)%}</p>
 			<p>Quantidade de clientes: {%print(clientes|length)%}</p>
-			<a href = "{{url_for('new')}}">Selecionar novo arquivo</a>
+			<a href = "{{url_for('new')}}"><img id = "refresh" style="width: 45px;"src="{{url_for('static',filename='images/refresh.png')}}"/>Selecionar nova classificação</a>
 			<center>
 				<table id = "lista">
 					<tr>
@@ -20,7 +20,7 @@
 						<th>Soma pedidos</th>
 						<th>classe</th>
 					</tr>
-					{%for cliente in clientes%}
+		<!-- 			{%for cliente in clientes%}
 						{%set id = "cor"+ (loop.index%2)|string%}
 						<tr id = {{id}}>
 						<td>{{clientes[cliente].codigo}}</td>
@@ -30,7 +30,42 @@
 						<td>{{clientes[cliente].somaPedidos}}</td>
 						<td>{{clientes[cliente].classe}}</td>
 						<tr>
-					{%endfor%}	
+					{%endfor%}	 -->
+					{%set count = {'c': 1 }%}
+					{%for classeID in classes %}
+						{%for cliente in classes[classeID] %}
+							{%set id = "cor"+ (count.c%2)|string%}
+							<tr id = {{id}}>
+							<!-- {{loop.index}} -->
+							<td>{{cliente.codigo}}</td>
+							<td>{{cliente.nome}}</td>
+							<td>{{cliente.regiao}}</td>
+							<td>{{cliente.quantPedidos}}</td>
+							<td>{{cliente.somaPedidos}}</td>
+							<td>{{cliente.classe}}</td>
+							<tr>
+							{%if count.update({'c':(count.c +1)})%}{%endif%}
+						{%endfor%}
+					{%endfor%}
+				</table>
+				<h3>statisticas:</h3>
+				<table>
+					<tr>
+						<th>Classe</th>
+						<th>membros</th>
+						<th>Percentual do total</th>
+					</tr>
+					{%set count = {'c': 1 }%}
+					{%for classeID in classes %}
+						{%set id = "cor"+ (count.c%2)|string%}
+						<tr id = {{id}}>
+						<!-- {{loop.index}} -->
+						<td>{{classeID}}</td>
+						<td>{{classes[classeID]|length}}</td>
+						<td>{{(classes[classeID]|length)/((clientes|length)/100)}}</td>
+						<tr>
+						{%if count.update({'c':(count.c +1)})%}{%endif%}
+					{%endfor%}
 				</table>
 			</center>
 		</div>

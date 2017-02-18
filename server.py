@@ -40,6 +40,9 @@ def list():
 	limiar = float(request.args['limiar'])
 	classificacao = cc.classificar(clustersMax,limiar)
 	classes = classificacao['classes']
+	# for classeID in classes:
+	# 	for cliente in classes[classeID]:
+	# 		print(cliente) 
 	clientes = classificacao['clientes']
 	return render_template("lista.html",classes = classes,clientes = clientes)
 
