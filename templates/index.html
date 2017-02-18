@@ -8,7 +8,7 @@
 	<body>
 		<div class = "content">
 			<center><h3>Selecione seu arquivo</h3></center>
-			<div id = "erro">{%print(mensagem)%}</div>
+			<div id = "erro">{{mensagem}}</div>
 			<form method = "post" action = "{{url_for('cluster')}}" id = "upload" enctype="multipart/form-data">
 				<input type="file" name="arquivo" required accept=".csv">
 				<p>Quantidade máxima de clusters: <input type="number" name="clusters" min = 1 max = 14 value = 14 required></p>
